@@ -67,7 +67,7 @@ git clone https://github.com/Brainskull24/gyangrove-backend.git
 If you already have the given prerequisites above then continue further:
 
 ### Run
-``` open terminal and run <span><b>npm install</b></span> ```
-``` After installing node_modules you can run <span><b>node server.js</b></span> ```
+open terminal and run <span><b>``` npm install ```</b></span>
+After installing node_modules you can run <span><b>``` node server.js ```</b></span>
 
-Now open your web browser and type ```localhost:3000 ``` for result!
+Now open your web browser and type ```localhost:3000``` for result!
