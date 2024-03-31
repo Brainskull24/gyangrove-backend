@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Management</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    form {
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    button {
+      padding: 10px 20px;
+    }
+
+    #eventDetails {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Event Management System</h1>
+  <form id="eventForm">
+    <label for="latitude">Latitude:</label>
+    <input type="text" id="latitude" name="latitude"><br><br>
+    <label for="longitude">Longitude:</label>
+    <input type="text" id="longitude" name="longitude"><br><br>
+    <label for="date">Date:</label>
+    <input type="date" id="date" name="date"><br><br>
+    <button type="submit">Search Events</button>
+  </form>
+  <div id="eventDetails"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const eventForm = document.getElementById('eventForm');
+      const eventDetails = document.getElementById('eventDetails');
+
+      eventForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const latitude = document.getElementById('latitude').value;
+        const longitude = document.getElementById('longitude').value;
+        const date = document.getElementById('date').value;
+
+        try {
+          const response = await fetch(`/events?latitude=${latitude}&longitude=${longitude}&date=${date}&page=1`);
+          const events = await response.json();
+
+          if (events.length === 0) {
+            eventDetails.innerHTML = 'No events found for the specified location and date.';
+          } else {
+            let html = '<h2>Events</h2>';
+            events.forEach(event => {
+              html += `
+                <div>
+                  <h3>${event.event_name}</h3>
+                  <p>City: ${event.city_name}</p>
+                  <p>Date: ${event.date}</p>
+                  <p>Time: ${event.time}</p>
+                  <p>Latitude: ${event.latitude}</p>
+                  <p>Longitude: ${event.longitude}</p>
+                </div>
+              `;
+            });
+            eventDetails.innerHTML = html;
+          }
+        } catch (error) {
+          console.error('Error fetching events:', error);
+          eventDetails.innerHTML = 'An error occurred while fetching events.';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
