@@ -9,10 +9,7 @@ const app = express();
 app.use(express.static('client'));
 
 //database connectivity
-mongoose.connect('mongodb://localhost:27017/eventDB', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect('mongodb://localhost:27017/eventDB');
 
 app.use(express.json());
 
