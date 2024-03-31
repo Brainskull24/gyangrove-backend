@@ -30,16 +30,16 @@ Implemented pagination on the backend to break large datasets into smaller, mana
 Used skip() and limit() methods in MongoDB queries to retrieve a specific subset of data based on the requested page size and number.
 Setting Up and Running the Project:
 
-### Prerequisites:
+## Prerequisites:
 
 Node.js installed on your machine
 MongoDB installed and running locally
-Steps:
 
-Clone the repository to your local machine.
+## Steps:
+Clone the repository to your local machine using git clone web_url.
 Navigate to the project directory in your terminal or command prompt.
 Install dependencies by running npm install.
-Start the backend server by running node server.js or npm start.
-Access the frontend by opening index.html in a web browser.
+Start the backend server by running node server.js.
+Access the frontend by opening localhost:3000 in a web browser.
 Enter latitude, longitude, and date in the form fields and submit to search for events.
 Scroll down to load more events as needed.
