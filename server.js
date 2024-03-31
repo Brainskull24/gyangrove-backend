@@ -9,7 +9,7 @@ const app = express();
 app.use(express.static('client'));
 
 //database connectivity
-mongoose.connect('mongodb://localhost:27017/eventDB');
+mongoose.connect('mongodb+srv://gargnimit36:brainskull24@gyangrove.xxdtxah.mongodb.net/EventDB');
 
 app.use(express.json());
 
