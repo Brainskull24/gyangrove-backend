@@ -25,6 +25,16 @@ HTML, CSS, JavaScript: Standard web technologies used for creating the user inte
 Fetch API: Used for making asynchronous HTTP requests from the client-side JavaScript code to the backend server.
 
 ## Design Decisions:
+<<<<<<< HEAD
+=======
+
+### Backend API Design:
+
+RESTful API: The backend follows RESTful principles to provide a clear and predictable interface for interacting with the application.
+Pagination: Implemented pagination to efficiently handle large datasets, improving performance and reducing response times for the client.
+
+### Database Schema:
+>>>>>>> 5f3d976eec638b2b1114c6f62a2353ca5e934fcd
 
 ### Backend API Design:
 RESTful API: The backend follows RESTful principles to provide a clear and predictable interface for interacting with the application. 
