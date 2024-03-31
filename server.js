@@ -1,7 +1,7 @@
-const csvParser = require('csv-parser');
-const fs = require('fs');
 const express = require('express');
 require('dotenv').config()
+const csvParser = require('csv-parser');
+const fs = require('fs');
 const mongoose = require('mongoose');
 const Event = require('./models/Event');
 const fetch = require('node-fetch');
