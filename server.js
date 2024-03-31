@@ -1,15 +1,15 @@
 const csvParser = require('csv-parser');
 const fs = require('fs');
 const express = require('express');
+require('dotenv').config()
 const mongoose = require('mongoose');
 const Event = require('./models/Event');
 const fetch = require('node-fetch');
-
 const app = express();
 app.use(express.static('client'));
 
 //database connectivity
-mongoose.connect('mongodb+srv://gargnimit36:brainskull24@gyangrove.xxdtxah.mongodb.net/EventDB?retryWrites=true&w=majority&appName=GYANGROVE')
+mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@gyangrove.xxdtxah.mongodb.net/EventDB?retryWrites=true&w=majority&appName=GYANGROVE`)
   .then(() => {
     console.log('Connected to MongoDB');
     startServer();
