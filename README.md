@@ -14,6 +14,13 @@ MongoDB: Selected as the database due to its flexibility, scalability, and suppo
 HTML, CSS, JavaScript: Standard web technologies used for creating the user interface and adding interactivity to the application.
 Fetch API: Used for making asynchronous HTTP requests from the client-side JavaScript code to the backend server.
 
+## Design Decisions:
+
+### Backend API Design:
+
+RESTful API: The backend follows RESTful principles to provide a clear and predictable interface for interacting with the application.
+Pagination: Implemented pagination to efficiently handle large datasets, improving performance and reducing response times for the client.
+
 ### Database Schema:
 
 Event Schema: Designed to store event-related information such as event name, city, date, time, latitude, and longitude. This schema facilitates efficient querying and retrieval of events based on different criteria.
