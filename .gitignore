@@ -1,0 +1,12 @@
+# Exclude node_modules directory
+node_modules/
+
+# Exclude log files
+*.log
+
+# Exclude build output directories
+/dist/
+/build/
+
+# Exclude environment configuration files with sensitive information
+.env
