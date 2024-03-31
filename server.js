@@ -14,7 +14,7 @@ mongoose.connect('mongodb+srv://gargnimit36:brainskull24@gyangrove.xxdtxah.mongo
 app.use(express.json());
 
 //csv parsing
-Event.countDocuments()
+Event.countDocuments().maxTimeMS(30000)
   .then(count => {
     if (count === 0) {
       fs.createReadStream('events.csv')
