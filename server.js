@@ -20,7 +20,6 @@ app.use(express.json());
 Event.countDocuments()
   .then(count => {
     if (count === 0) {
-      // Read the CSV file and import data into MongoDB
       fs.createReadStream('events.csv')
         .pipe(csvParser())
         .on('data', (row) => {
@@ -56,18 +55,20 @@ async function calculateDistance(userLat, userLng, eventLat, eventLng) {
 }
 
 // get events api
-app.get('/events', async (req, res) => {
+app.get('/events/find', async (req, res) => {
   const { latitude, longitude, date, page } = req.query;
   const pageSize = 10;
   const skip = (page - 1) * pageSize;
 
   try {
+    const startDate = new Date(date);
+    const endDate = new Date(startDate.getTime() + 14 * 24 * 60 * 60 * 1000);
+
     const events = await Event.find({
-      date: { $gte: new Date(date), $lte: new Date(new Date(date).getTime() + 14 * 24 * 60 * 60 * 1000) }
+      date: { $gte: startDate, $lte: endDate }
     }).sort({ date: 1 }).skip(skip).limit(pageSize);
 
     const results = [];
-
     for (const event of events) {
       const dateString = event.date.toISOString();
       const dateParts = dateString.split("T");
@@ -78,19 +79,30 @@ app.get('/events', async (req, res) => {
       results.push({
         event_name: event.event_name,
         city_name: event.city_name,
-        date: event.date,
+        date: datetrue,
         weather: weatherData.weather,
         distance: distanceData.distance
       });
     }
 
-    res.json(results);
+    const totalEvents = await Event.countDocuments({
+      date: { $gte: startDate, $lte: endDate }
+    });
+    const totalPages = Math.ceil(totalEvents / pageSize);
+    const response = {
+      events: results,
+      page: parseInt(page) || 1,
+      pageSize: pageSize,
+      totalEvents: totalEvents,
+      totalPages: totalPages
+    };
+
+    res.json(response);
   } catch (error) {
     console.error('Error fetching events:', error);
     res.status(500).json({ message: 'An error occurred while fetching events.' });
   }
 });
-
 
 
 const PORT = process.env.PORT || 3000;
