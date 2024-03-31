@@ -9,7 +9,7 @@ const app = express();
 app.use(express.static('client'));
 
 //database connectivity
-mongoose.connect('mongodb+srv://gargnimit36:brainskull24@gyangrove.xxdtxah.mongodb.net/EventDB?retryWrites=true&w=majority&appName=GYANGROVE');
+mongoose.connect('mongodb+srv://gargnimit36:brainskull24@gyangrove.xxdtxah.mongodb.net/EventDB?retryWrites=true&w=majority');
 
 app.use(express.json());
 
