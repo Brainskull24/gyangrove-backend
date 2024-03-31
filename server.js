@@ -9,32 +9,43 @@ const app = express();
 app.use(express.static('client'));
 
 //database connectivity
-mongoose.connect('mongodb+srv://gargnimit36:brainskull24@gyangrove.xxdtxah.mongodb.net/EventDB?retryWrites=true&w=majority');
-
+mongoose.connect('mongodb+srv://gargnimit36:brainskull24@gyangrove.xxdtxah.mongodb.net/EventDB?retryWrites=true&w=majority&appName=GYANGROVE')
+  .then(() => {
+    console.log('Connected to MongoDB');
+    startServer();
+  })
+  .catch(err => {
+    console.error('Error connecting to MongoDB:', err);
+  })
 app.use(express.json());
 
 //csv parsing
-Event.countDocuments().maxTimeMS(30000)
-  .then(count => {
-    if (count === 0) {
-      fs.createReadStream('events.csv')
-        .pipe(csvParser())
-        .on('data', (row) => {
-          const event = new Event(row);
-          event.save();
-        })
-        .on('end', () => {
-          console.log('CSV file successfully processed and data imported into database');
-        });
-    } else {
-      console.log('Database already contains data. Skipping import.');
+function startServer() {
+  app.use(express.json());
+
+  // CSV parsing and data import
+  async function importEventData() {
+    try {
+      const count = await Event.countDocuments();
+      if (count === 0) {
+        fs.createReadStream('events.csv')
+          .pipe(csvParser())
+          .on('data', async (row) => {
+            const event = new Event(row);
+            await event.save();
+          })
+          .on('end', () => {
+            console.log('CSV file successfully processed and data imported into database');
+          });
+      } else {
+        console.log('Database already contains data. Skipping import.');
+      }
+    } catch (error) {
+      console.error('Error checking database:', error);
     }
-  })
-  .catch(err => {
-    console.error('Error checking database:', err);
-  });
+  }
 
-
+  importEventData();
 // weather fetch api
 async function fetchWeather(city, date) {
   const url = `https://gg-backend-assignment.azurewebsites.net/api/Weather?code=KfQnTWHJbg1giyB_Q9Ih3Xu3L9QOBDTuU5zwqVikZepCAzFut3rqsg==&city=${city}&date=${date}`;
@@ -106,3 +117,4 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
+}
